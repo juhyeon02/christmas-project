@@ -1,3 +1,4 @@
+// 방명록
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -6,22 +7,27 @@ import TextInput from "../ui/Textinput";
 import Button from "../ui/Button";
 import data from "../../data.json";
 
+const Background = styled.div`
+  position: relative;
+  width: 1280px;
+  height: 832px;
+`;
 const Wrapper = styled.div`
-  padding: 16px;
-  width: calc(100% - 32px);
+  width: 390px;
+  height: 500px;
+  background-color: green;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  right: 0;
+  top: 40%;
 `;
 
 const Container = styled.div`
   width: 100%;
   max-width: 720px;
-
-  :not(:last-child) {
-    margin-bottom: 16px;
-  }
 `;
 
 const PostContainer = styled.div`
@@ -41,11 +47,6 @@ const ContentText = styled.p`
   white-space: pre-wrap;
 `;
 
-const CommentLabel = styled.p`
-  font-size: 16px;
-  font-weight: 500;
-`;
-
 function PostViewPage(props) {
   const navigate = useNavigate();
   const { postId } = useParams();
@@ -57,37 +58,16 @@ function PostViewPage(props) {
   const [comment, setComment] = useState("");
 
   return (
-    <Wrapper>
-      <Container>
-        <Button
-          title="뒤로 가기"
-          onClick={() => {
-            navigate("/");
-          }}
-        />
-        <PostContainer>
-          <TitleText>{post.title}</TitleText>
-          <ContentText>{post.content}</ContentText>
-        </PostContainer>
-
-        <CommentLabel>댓글</CommentLabel>
-        <CommentList comments={post.comments} />
-
-        <TextInput
-          height={40}
-          value={comment}
-          onChange={(event) => {
-            setComment(event.target.value);
-          }}
-        />
-        <Button
-          title="댓글 작성하기"
-          onClick={() => {
-            navigate("/");
-          }}
-        />
-      </Container>
-    </Wrapper>
+    <Background>
+      <Wrapper>
+        <Container>
+          <PostContainer>
+            <TitleText>{post.title}</TitleText>
+            <ContentText>{post.content}</ContentText>
+          </PostContainer>
+        </Container>
+      </Wrapper>
+    </Background>
   );
 }
 

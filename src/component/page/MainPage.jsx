@@ -1,10 +1,12 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import PostList from "../list/Postlist";
-import PostListShow from "../list/Postlist";
+import PostListShow from "../list/PostlistShow";
 import Button from "../ui/Button";
 import data from "../../data.json";
+import PostViewPage from "./PostViewPage";
+
 const Background = styled.div`
   position: relative;
   width: 1280px;
@@ -26,7 +28,7 @@ const Main1 = styled.div`
 const PostWriteList = styled.div`
   width: 300px;
   heigth: 500px;
-  background-color: black;
+  background-color: green;
 `;
 
 {
@@ -62,14 +64,50 @@ const Showbg = styled.div`
 `;
 const Show = styled.div`
   width: 390px;
-  height: 550px;
+  height: 500px;
   background-color: rgba(242, 167, 177, 1);
   display: flex;
   justify-content: center;
 `;
+const PostShow = styled.div`
+  width: 390px;
+  height: 500px;
+`;
+
+const TitleText = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  font-color: rgba(43, 43, 43, 1);
+  padding: 10px;
+  text-align: center;
+`;
+
+const ContentText = styled.p`
+  font-size: 17px;
+  line-height: 32px;
+  font-weight: bold;
+  white-space: pre-wrap;
+  font-color: rgba(64, 64, 64, 1);
+  padding: 10px;
+  text-align: center;
+`;
+
+const ListShow = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  font-color: white;
+`;
 
 function MainPage(props) {
   const navigate = useNavigate();
+  const { postId } = useParams();
+  const [selectedPost, setSelectedPost] = useState(null);
+  const post = data.find((item) => {
+    return item.id == postId;
+  });
+  const handleListClick = () => {
+    navigate("/PostList");
+  };
 
   return (
     <Background>
@@ -85,31 +123,45 @@ function MainPage(props) {
           <PostListShow
             posts={data}
             onClickItem={(item) => {
-              navigate(`/post/${item.id}`);
+              setSelectedPost(item); // 클릭한 포스트를 선택된 포스트로 설정
             }}
           />
         </PostWriteList>
       </Main1>
       {/* 메인 오른쪽 */}
-
       <Main2>
         <Ribbon>
           <RibbonImg></RibbonImg>
         </Ribbon>
-
         <div
           style={{
             color: "white",
             fontSize: 30,
             fontWeight: "bold",
             textAlign: "center",
+            padding: 10,
           }}
         >
           현지의 트리
         </div>
         <Showbg>
-          <Show></Show>
+          <Show>
+            <PostShow>
+              {selectedPost && (
+                <>
+                  <TitleText>{selectedPost.title}</TitleText>
+                  <ContentText>{selectedPost.content}</ContentText>
+                </>
+              )}
+            </PostShow>
+          </Show>
         </Showbg>
+
+        <ListShow>
+          <div>
+            <ListShow onClick={handleListClick}>방명록 리스트</ListShow>
+          </div>
+        </ListShow>
       </Main2>
     </Background>
   );
