@@ -3,7 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import PostList from "../list/Postlist";
 import PostListShow from "../list/PostlistShow";
+import DiaryListShow from "../list/DiarylistShow";
 import Button from "../ui/Button";
+import Button2 from "../ui/Button2";
 import data from "../../data.json";
 import PostViewPage from "./PostViewPage";
 
@@ -26,9 +28,22 @@ const Main1 = styled.div`
 
 //방명록 등록하면 나타남
 const PostWriteList = styled.div`
-  width: 300px;
+  width: 160px;
   heigth: 500px;
-  background-color: green;
+  position: absolute;
+  left: 52%;
+  top: 20%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+const DiaryWriteList = styled.div`
+  width: 500px;
+  height: 100px;
+  position: absolute;
+  left: 5%;
+  top: 85%;
 `;
 
 {
@@ -105,9 +120,6 @@ function MainPage(props) {
   const post = data.find((item) => {
     return item.id == postId;
   });
-  const handleListClick = () => {
-    navigate("/PostList");
-  };
 
   return (
     <Background>
@@ -127,6 +139,20 @@ function MainPage(props) {
             }}
           />
         </PostWriteList>
+        <Button2
+          title="+"
+          onClick={() => {
+            navigate("/post-write");
+          }}
+        />
+        <DiaryWriteList>
+          <DiaryListShow
+            posts={data}
+            onClickItem={(item) => {
+              setSelectedPost(item); // 클릭한 포스트를 선택된 포스트로 설정
+            }}
+          />
+        </DiaryWriteList>
       </Main1>
       {/* 메인 오른쪽 */}
       <Main2>
@@ -159,7 +185,24 @@ function MainPage(props) {
 
         <ListShow>
           <div>
-            <ListShow onClick={handleListClick}>방명록 리스트</ListShow>
+            <ListShow
+              onClick={() => {
+                navigate("../list/PostList");
+              }}
+            >
+              <div
+                style={{
+                  color: "white",
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  padding: 5,
+                }}
+              >
+                {" "}
+                방명록 리스트
+              </div>
+            </ListShow>
           </div>
         </ListShow>
       </Main2>

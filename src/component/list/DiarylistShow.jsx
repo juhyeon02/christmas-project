@@ -1,29 +1,27 @@
 import React from "react";
 import styled from "styled-components";
-import PostListItemShow from "./PostlistItemShow";
-
+import DiaryListItemShow from "./DiarylistItemShow";
 const Wrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  display-direction: row;
 `;
 
-function PostListShow(props) {
+function DiaryListShow(props) {
   const { posts, onClickItem } = props;
 
   return (
     <Wrapper>
       {posts.map((post, index) => {
         return (
-          <PostListItemShow
+          <DiaryListItemShow
             onClick={() => {
               onClickItem(post);
             }}
-          ></PostListItemShow>
+          ></DiaryListItemShow>
         );
       })}
     </Wrapper>
   );
 }
 
-export default PostListShow;
+export default DiaryListShow;

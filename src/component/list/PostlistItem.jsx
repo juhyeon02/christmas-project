@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  width: clac(100% - 32px);
+  background-img: url("img/white-star.png");
+  width: 50px;
+  height: 50px;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -10,10 +12,6 @@ const Wrapper = styled.div`
   justify-content: center;
   border: 1px solid grey;
   cursor: pointer;
-  background: white;
-  :hover {
-    backgound: lightpink;
-  }
 `;
 
 const TitleText = styled.p`
